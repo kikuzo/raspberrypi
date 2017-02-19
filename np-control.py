@@ -11,20 +11,24 @@ import time
 
 import RPi.GPIO as GPIO
 
+LED_COUNT      = 10      # Number of LED pixels.
+LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!)
+
+TOGGLE_BUTTON_PIN = 24
 portStatus = GPIO.LOW
 
 def myCallBack(channel):
 	global portStatus
   
-	if channel == 24:
+	if channel == TOGGLE_BUTTON_PIN:
 		if portStatus == GPIO.LOW:
 			portStatus = GPIO.HIGH
 			#print("HIGH")
-			myneopixel.startDemo()
+			mynp.startDemo()
 		else:
 			portStatus = GPIO.LOW
 			#print("LOW")
-			myneopixel.stopDemo()
+			mynp.stopDemo()
 
 # Main program logic follows:
 if __name__ == '__main__':
@@ -34,13 +38,16 @@ if __name__ == '__main__':
 	# Intialize the library (must be called once before other functions).
 	#strip.begin()
 
+	''' neoPixelを操作するクラスを生成'''
+	mynp = myneopixel.Myneopixel(LED_COUNT, LED_PIN)	
+
 	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-	GPIO.add_event_detect(24, GPIO.RISING, callback=myCallBack, bouncetime=200)
+	GPIO.setup(TOGGLE_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.add_event_detect(TOGGLE_BUTTON_PIN, GPIO.RISING, callback=myCallBack, bouncetime=200)
  
 	try:
 		while True:
 			time.sleep(0.01)
 	except KeyboardInterrupt:
-		myneopixel.stopDemo()
+		mynp.stopDemo()
 		GPIO.cleanup()
