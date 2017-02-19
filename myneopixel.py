@@ -58,7 +58,7 @@ class Myneopixel():
 		"""Draw rainbow that fades across all pixels at once."""
 		for j in range(256*iterations):
 			for i in range(self.strip.numPixels()):
-				self.strip.setPixelColor(i, wheel((i+j) & 255))
+				self.strip.setPixelColor(i, self.wheel((i+j) & 255))
 			self.strip.show()
 			self.mysleep(wait_ms)
 			if self.stop_event.is_set(): break
@@ -67,7 +67,7 @@ class Myneopixel():
 		"""Draw rainbow that uniformly distributes itself across all pixels."""
 		for j in range(256*iterations):
 			for i in range(self.strip.numPixels()):
-				self.strip.setPixelColor(i, wheel((int(i * 256 / self.strip.numPixels()) + j) & 255))
+				self.strip.setPixelColor(i, self.wheel((int(i * 256 / self.strip.numPixels()) + j) & 255))
 			self.strip.show()
 			self.mysleep(wait_ms)
 			if self.stop_event.is_set(): break
@@ -77,7 +77,7 @@ class Myneopixel():
 		for j in range(256):
 			for q in range(3):
 				for i in range(0, self.strip.numPixels(), 3):
-					self.strip.setPixelColor(i+q, wheel((i+j) % 255))
+					self.strip.setPixelColor(i+q, self.wheel((i+j) % 255))
 				self.strip.show()
 				self.mysleep(wait_ms)
 				for i in range(0, self.strip.numPixels(), 3):
