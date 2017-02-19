@@ -24,9 +24,9 @@ class Myneopixel():
 	# Define functions which animate LEDs in various ways.
 	def colorWipe(self, strip, color, wait_ms=50):
 		"""Wipe color across display a pixel at a time."""
-		for i in range(strip.numPixels()):
-			strip.setPixelColor(i, color)
-			strip.show()
+		for i in range(self.strip.numPixels()):
+			self.strip.setPixelColor(i, color)
+			self.strip.show()
 			mysleep(wait_ms)
 			if self.stop_event.is_set(): break
 	
@@ -34,12 +34,12 @@ class Myneopixel():
 		"""Movie theater light style chaser animation."""
 		for j in range(iterations):
 			for q in range(3):
-				for i in range(0, strip.numPixels(), 3):
-					strip.setPixelColor(i+q, color)
-				strip.show()
+				for i in range(0, self.strip.numPixels(), 3):
+					self.strip.setPixelColor(i+q, color)
+				self.strip.show()
 				mysleep(wait_ms)
-				for i in range(0, strip.numPixels(), 3):
-					strip.setPixelColor(i+q, 0)
+				for i in range(0, self.strip.numPixels(), 3):
+					self.strip.setPixelColor(i+q, 0)
 				if self.stop_event.is_set(): break
 			if self.stop_event.is_set(): break
 	
@@ -57,18 +57,18 @@ class Myneopixel():
 	def rainbow(self, strip, wait_ms=20, iterations=1):
 		"""Draw rainbow that fades across all pixels at once."""
 		for j in range(256*iterations):
-			for i in range(strip.numPixels()):
-				strip.setPixelColor(i, wheel((i+j) & 255))
-			strip.show()
+			for i in range(self.strip.numPixels()):
+				self.strip.setPixelColor(i, wheel((i+j) & 255))
+			self.strip.show()
 			mysleep(wait_ms)
 			if self.stop_event.is_set(): break
 	
 	def rainbowCycle(self, strip, wait_ms=20, iterations=5):
 		"""Draw rainbow that uniformly distributes itself across all pixels."""
 		for j in range(256*iterations):
-			for i in range(strip.numPixels()):
-				strip.setPixelColor(i, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
-			strip.show()
+			for i in range(self.strip.numPixels()):
+				self.strip.setPixelColor(i, wheel((int(i * 256 / self.strip.numPixels()) + j) & 255))
+			self.strip.show()
 			mysleep(wait_ms)
 			if self.stop_event.is_set(): break
 
@@ -76,30 +76,30 @@ class Myneopixel():
 		"""Rainbow movie theater light style chaser animation."""
 		for j in range(256):
 			for q in range(3):
-				for i in range(0, strip.numPixels(), 3):
-					strip.setPixelColor(i+q, wheel((i+j) % 255))
-				strip.show()
+				for i in range(0, self.strip.numPixels(), 3):
+					self.strip.setPixelColor(i+q, wheel((i+j) % 255))
+				self.strip.show()
 				mysleep(wait_ms)
-				for i in range(0, strip.numPixels(), 3):
-					strip.setPixelColor(i+q, 0)
+				for i in range(0, self.strip.numPixels(), 3):
+					self.strip.setPixelColor(i+q, 0)
 				if self.stop_event.is_set(): break
 			if self.stop_event.is_set(): break
 
 	def target(self):
 		while not self.stop_event.is_set():
 			# Color wipe animations.
-			if not self.stop_event.is_set(): self.colorWipe(strip, Color(255, 0, 0))
-			if not self.stop_event.is_set(): self.colorWipe(strip, Color( 0,255, 0))
-			if not self.stop_event.is_set(): self.colorWipe(strip, Color(0, 0, 255))
+			if not self.stop_event.is_set(): self.colorWipe(self.strip, Color(255, 0, 0))
+			if not self.stop_event.is_set(): self.colorWipe(self.strip, Color( 0,255, 0))
+			if not self.stop_event.is_set(): self.colorWipe(self.strip, Color(0, 0, 255))
 				
 			# Theater chase animations.
-			if not self.stop_event.is_set(): self.theaterChase(strip, Color(127, 127, 127))  # White theater chase
-			if not self.stop_event.is_set(): self.theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-			if not self.stop_event.is_set(): self.theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
+			if not self.stop_event.is_set(): self.theaterChase(self.strip, Color(127, 127, 127))  # White theater chase
+			if not self.stop_event.is_set(): self.theaterChase(self.strip, Color(127,   0,   0))  # Red theater chase
+			if not self.stop_event.is_set(): self.theaterChase(self.strip, Color(  0,   0, 127))  # Blue theater chase
 			# Rainbow animations.
-			if not self.stop_event.is_set(): self.rainbow(strip)
-			if not self.stop_event.is_set(): self.rainbowCycle(strip)
-			if not self.stop_event.is_set(): self.theaterChaseRainbow(strip)
+			if not self.stop_event.is_set(): self.rainbow(self.strip)
+			if not self.stop_event.is_set(): self.rainbowCycle(self.strip)
+			if not self.stop_event.is_set(): self.theaterChaseRainbow(self.strip)
 
 
 	# for abort thread process
@@ -111,8 +111,8 @@ class Myneopixel():
 	def clearLED(self):
 		"""すべて消灯させる"""
 		for i in range(strip.numPixels()):
-			strip.setPixelColor(i, Color(0, 0, 0))
-			strip.show()
+			self.strip.setPixelColor(i, Color(0, 0, 0))
+			self.strip.show()
 		
 	def startDemo(self):
 		self.stop_event = threading.Event() #停止させるかのフラグ
@@ -131,6 +131,6 @@ class Myneopixel():
 	def __init__(self, count, pin):
 		# define strip object.
 		#strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
-		strip = Adafruit_NeoPixel(count, pin, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
+		self.strip = Adafruit_NeoPixel(count, pin, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 		# Intialize the library (must be called once before other functions).
-		strip.begin()
+		self.strip.begin()
