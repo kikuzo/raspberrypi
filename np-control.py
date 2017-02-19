@@ -23,20 +23,13 @@ def myCallBack(channel):
 	if channel == TOGGLE_BUTTON_PIN:
 		if portStatus == GPIO.LOW:
 			portStatus = GPIO.HIGH
-			#print("HIGH")
 			mynp.startDemo()
 		else:
 			portStatus = GPIO.LOW
-			#print("LOW")
 			mynp.stopDemo()
 
 # Main program logic follows:
 if __name__ == '__main__':
-
-	# Create NeoPixel object with appropriate configuration.
-	#strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
-	# Intialize the library (must be called once before other functions).
-	#strip.begin()
 
 	''' neoPixelを操作するクラスを生成'''
 	mynp = myneopixel.Myneopixel(LED_COUNT, LED_PIN)	
