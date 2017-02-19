@@ -88,18 +88,18 @@ class Myneopixel():
 	def target(self):
 		while not self.stop_event.is_set():
 			# Color wipe animations.
-			if not self.stop_event.is_set(): colorWipe(strip, Color(255, 0, 0))
-			if not self.stop_event.is_set(): colorWipe(strip, Color( 0,255, 0))
-			if not self.stop_event.is_set(): colorWipe(strip, Color(0, 0, 255))
+			if not self.stop_event.is_set(): self.colorWipe(strip, Color(255, 0, 0))
+			if not self.stop_event.is_set(): self.colorWipe(strip, Color( 0,255, 0))
+			if not self.stop_event.is_set(): self.colorWipe(strip, Color(0, 0, 255))
 				
 			# Theater chase animations.
-			if not self.stop_event.is_set(): theaterChase(strip, Color(127, 127, 127))  # White theater chase
-			if not self.stop_event.is_set(): theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-			if not self.stop_event.is_set(): theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
+			if not self.stop_event.is_set(): self.theaterChase(strip, Color(127, 127, 127))  # White theater chase
+			if not self.stop_event.is_set(): self.theaterChase(strip, Color(127,   0,   0))  # Red theater chase
+			if not self.stop_event.is_set(): self.theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
 			# Rainbow animations.
-			if not self.stop_event.is_set(): rainbow(strip)
-			if not self.stop_event.is_set(): rainbowCycle(strip)
-			if not self.stop_event.is_set(): theaterChaseRainbow(strip)
+			if not self.stop_event.is_set(): self.rainbow(strip)
+			if not self.stop_event.is_set(): self.rainbowCycle(strip)
+			if not self.stop_event.is_set(): self.theaterChaseRainbow(strip)
 
 
 	# for abort thread process
@@ -126,7 +126,7 @@ class Myneopixel():
 		if not self.stop_event.is_set():
 			self.stop_event.set()
 			self.thread.join()    #スレッドが停止するのを待つ
-			clearLED()		
+			self.clearLED()		
 
 	def __init__(self, count, pin):
 		# define strip object.
