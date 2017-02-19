@@ -27,7 +27,7 @@ class Myneopixel():
 		for i in range(self.strip.numPixels()):
 			self.strip.setPixelColor(i, color)
 			self.strip.show()
-			mysleep(wait_ms)
+			self.mysleep(wait_ms)
 			if self.stop_event.is_set(): break
 	
 	def theaterChase(self, strip, color, wait_ms=50, iterations=10):
@@ -37,7 +37,7 @@ class Myneopixel():
 				for i in range(0, self.strip.numPixels(), 3):
 					self.strip.setPixelColor(i+q, color)
 				self.strip.show()
-				mysleep(wait_ms)
+				self.mysleep(wait_ms)
 				for i in range(0, self.strip.numPixels(), 3):
 					self.strip.setPixelColor(i+q, 0)
 				if self.stop_event.is_set(): break
@@ -60,7 +60,7 @@ class Myneopixel():
 			for i in range(self.strip.numPixels()):
 				self.strip.setPixelColor(i, wheel((i+j) & 255))
 			self.strip.show()
-			mysleep(wait_ms)
+			self.mysleep(wait_ms)
 			if self.stop_event.is_set(): break
 	
 	def rainbowCycle(self, strip, wait_ms=20, iterations=5):
@@ -69,7 +69,7 @@ class Myneopixel():
 			for i in range(self.strip.numPixels()):
 				self.strip.setPixelColor(i, wheel((int(i * 256 / self.strip.numPixels()) + j) & 255))
 			self.strip.show()
-			mysleep(wait_ms)
+			self.mysleep(wait_ms)
 			if self.stop_event.is_set(): break
 
 	def theaterChaseRainbow(self, strip, wait_ms=50):
@@ -79,7 +79,7 @@ class Myneopixel():
 				for i in range(0, self.strip.numPixels(), 3):
 					self.strip.setPixelColor(i+q, wheel((i+j) % 255))
 				self.strip.show()
-				mysleep(wait_ms)
+				self.mysleep(wait_ms)
 				for i in range(0, self.strip.numPixels(), 3):
 					self.strip.setPixelColor(i+q, 0)
 				if self.stop_event.is_set(): break
@@ -110,7 +110,7 @@ class Myneopixel():
 	
 	def clearLED(self):
 		"""すべて消灯させる"""
-		for i in range(strip.numPixels()):
+		for i in range(self.strip.numPixels()):
 			self.strip.setPixelColor(i, Color(0, 0, 0))
 			self.strip.show()
 		
