@@ -32,7 +32,7 @@ if __name__ == '__main__':
             print("volts: {:8.2f}".format(volts))
             #print("temp : {:8.2f}".format(temp))
 
-            time.sleep(0.01)
+            time.sleep(1)
     except KeyboardInterrupt:
         spi.close()
         sys.exit(0)
