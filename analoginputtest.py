@@ -6,7 +6,7 @@ spi = spidev.SpiDev()
 spi.open(0,0)
 
 def readAdc(channel):
-    adc = spi.xfer2([(0x07 if(channel & 0x04) else 0x06), (channel & 0x03), 0])
+    adc = spi.xfer2([(0x07 if(channel & 0x04) else 0x06), (channel & 0x03) << 6, 0])
     data = ((adc[1] & 0x0f) << 8) | adc[2]
     return data
 
