@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(TOGGLE_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-	GPIO.add_event_detect(TOGGLE_BUTTON_PIN, GPIO.RISING, callback=myCallBack, bouncetime=200)
+	GPIO.add_event_detect(TOGGLE_BUTTON_PIN, GPIO.FALLING, callback=myCallBack, bouncetime=200)
  
 	try:
 		while True:
